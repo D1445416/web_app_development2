@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}報名成功 - 活動報名系統{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10 text-center">
+            <div class="glass-card py-5">
+                <div class="success-checkmark">
+                    <i class="bi bi-check-lg"></i>
+                </div>
+                
+                <h2 class="fw-bold text-white mb-3">報名完成！</h2>
+                <p class="text-secondary mb-5">我們已成功接收您的報名資訊，期待您的蒞臨。</p>
+                
+                <!-- 報名摘要卡片 -->
+                <div class="bg-dark bg-opacity-50 border border-secondary border-opacity-25 rounded-3 p-4 text-start mb-5">
+                    <h5 class="text-white border-bottom border-secondary border-opacity-25 pb-2 mb-3">
+                        <i class="bi bi-file-earmark-text me-1 text-primary"></i> 您的報名摘要
+                    </h5>
+                    
+                    <div class="row mb-2">
+                        <div class="col-4 text-secondary">姓名：</div>
+                        <div class="col-8 text-white fw-medium">{{ registration.name }}</div>
+                    </div>
+                    
+                    <div class="row mb-2">
+                        <div class="col-4 text-secondary">出席狀態：</div>
+                        <div class="col-8 text-white fw-medium">
+                            <span class="badge {% if registration.status == '是' %}bg-success{% else %}bg-danger{% endif %} px-2 py-1 rounded-pill">
+                                {{ '確認出席' if registration.status == '是' else '不克出席' }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    {% if registration.status == '是' %}
+                    <div class="row mb-2">
+                        <div class="col-4 text-secondary">餐盒需求：</div>
+                        <div class="col-8 text-white fw-medium">
+                            {{ '需要餐盒' if registration.needs_lunchbox == '是' else '不需要餐盒' }}
+                        </div>
+                    </div>
+                    
+                    {% if registration.needs_lunchbox == '是' %}
+                    <div class="row mb-2">
+                        <div class="col-4 text-secondary">葷素選擇：</div>
+                        <div class="col-8 text-white fw-medium">
+                            <span class="badge bg-secondary px-2 py-1">{{ '葷食' if registration.dietary_preference == '葷' else '素食' }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    
+                    {% if registration.notes %}
+                    <div class="row mt-3 pt-2 border-top border-secondary border-opacity-10">
+                        <div class="col-12 text-secondary mb-1">備註說明：</div>
+                        <div class="col-12 text-white bg-dark bg-opacity-70 rounded p-2 text-break" style="font-size: 0.9rem;">
+                            {{ registration.notes }}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- 返回按鈕 -->
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="{{ url_for('public.index') }}" class="btn btn-premium px-4">
+                        <i class="bi bi-arrow-left me-2"></i>返回報名頁面
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

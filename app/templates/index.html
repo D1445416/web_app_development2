@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}填寫活動報名表單 - 活動報名系統{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="glass-card">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold text-white mb-2">活動報名表單</h2>
+                    <p class="text-secondary">請花費一分鐘填寫以下意願，協助我們做最好的準備！</p>
+                </div>
+
+                <form action="{{ url_for('public.submit_registration') }}" method="POST" class="needs-validation" novalidate>
+                    
+                    <!-- 1. 姓名 -->
+                    <div class="mb-4">
+                        <label for="name" class="form-label">您的姓名 <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-secondary">
+                                <i class="bi bi-person-fill"></i>
+                            </span>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="請輸入中文或英文姓名" value="{{ name }}" required>
+                        </div>
+                    </div>
+
+                    <!-- 2. 出席意願 -->
+                    <div class="mb-4">
+                        <label class="form-label">是否出席活動？ <span class="text-danger">*</span></label>
+                        <div class="btn-group-toggle">
+                            <div class="flex-grow-1">
+                                <input type="radio" class="btn-check" name="status" id="status-yes" value="否" style="display:none;"> <!-- Fallback and radio layout -->
+                                <input type="radio" class="btn-check" name="status" id="status-y" value="是" {% if status == '是' %}checked{% endif %} required>
+                                <label class="custom-btn-radio" for="status-y">
+                                    <i class="bi bi-check-circle me-1"></i> 是，我會出席
+                                </label>
+                            </div>
+                            <div class="flex-grow-1">
+                                <input type="radio" class="btn-check" name="status" id="status-n" value="否" {% if status == '否' %}checked{% endif %} required>
+                                <label class="custom-btn-radio" for="status-n">
+                                    <i class="bi bi-x-circle me-1"></i> 否，不克前往
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. 是否需要餐盒 (條件式欄位) -->
+                    <div id="lunchbox-group" class="conditional-field">
+                        <label class="form-label">是否需要餐盒？ <span class="text-danger">*</span></label>
+                        <div class="btn-group-toggle">
+                            <div class="flex-grow-1">
+                                <input type="radio" class="btn-check" name="needs_lunchbox" id="lunchbox-y" value="是" {% if needs_lunchbox == '是' %}checked{% endif %}>
+                                <label class="custom-btn-radio" for="lunchbox-y">
+                                    <i class="bi bi-egg-fried me-1"></i> 是，需要餐盒
+                                </label>
+                            </div>
+                            <div class="flex-grow-1">
+                                <input type="radio" class="btn-check" name="needs_lunchbox" id="lunchbox-n" value="否" {% if needs_lunchbox == '否' %}checked{% endif %}>
+                                <label class="custom-btn-radio" for="lunchbox-n">
+                                    <i class="bi bi-slash-circle me-1"></i> 否，不需要
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. 葷素選擇 (條件式欄位) -->
+                    <div id="diet-group" class="conditional-field">
+                        <label class="form-label">餐點葷素需求？ <span class="text-danger">*</span></label>
+                        <div class="btn-group-toggle">
+                            <div class="flex-grow-1">
+                                <input type="radio" class="btn-check" name="dietary_preference" id="diet-meat" value="葷" {% if dietary_preference == '葷' %}checked{% endif %}>
+                                <label class="custom-btn-radio" for="diet-meat">
+                                    <i class="bi bi-piggy-bank me-1"></i> 葷食
+                                </label>
+                            </div>
+                            <div class="flex-grow-1">
+                                <input type="radio" class="btn-check" name="dietary_preference" id="diet-veg" value="素" {% if dietary_preference == '素' %}checked{% endif %}>
+                                <label class="custom-btn-radio" for="diet-veg">
+                                    <i class="bi bi-flower1 me-1"></i> 素食
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. 備註 -->
+                    <div class="mb-5">
+                        <label for="notes" class="form-label">其他備註需求</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="例如食物過敏、特殊座位需求或其他意見...">{{ notes }}</textarea>
+                    </div>
+
+                    <!-- 提交按鈕 -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-premium btn-lg">
+                            <i class="bi bi-send-fill me-2"></i>送出報名表單
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/form.js') }}"></script>
+{% endblock %}

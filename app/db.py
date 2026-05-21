@@ -41,7 +41,16 @@ def init_db_command():
     with open(schema_path, 'r', encoding='utf-8') as f:
         db.executescript(f.read())
         
+    # 自動建立預設管理者帳號 admin / admin123
+    from werkzeug.security import generate_password_hash
+    db.execute(
+        "INSERT INTO users (username, password_hash) VALUES (?, ?)",
+        ("admin", generate_password_hash("admin123"))
+    )
+    db.commit()
+        
     click.echo('已成功初始化資料庫。')
+    click.echo('已建立預設管理者帳號：admin / 密碼：admin123')
 
 def init_app(app):
     """註冊資料庫連線的清理函式與 CLI 指令。"""

@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# Flask / SQLite
+instance/
+*.db
+
+# IDE / Editors
+.idea/
+.vscode/
+*.suo
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
